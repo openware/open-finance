@@ -17,7 +17,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+            Learn the standard - 15min ⏱️
           </Link>
         </div>
       </div>
@@ -29,8 +29,8 @@ export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`${siteConfig.title} Initiative`}
+      description="The Open-Finance protocol suggest a way for brokers to collaborate on a virtual overlay network of settlement channels such as XLN">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

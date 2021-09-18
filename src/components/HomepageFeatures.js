@@ -4,32 +4,32 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'High Performance protocol',
     Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        The OFP is designed with the flexibility of JSON or MsgPack,
+        But is compact and over persistent connections such as HTTP2 or WS
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Cross-Chain and Blockchain agnostic',
     Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Protocol has been design for modern FinTech to interact with all web3 compatible blockchains
+        you can comment our protocol described in <code>docs</code> directory.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Global Trade and Settlement network',
     Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        The protocol describe and suggest how the Finance can upgrade to take advantage
+        of the blockchain technologies for improving the legacy infrastructure.
       </>
     ),
   },
