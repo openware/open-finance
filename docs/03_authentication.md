@@ -1,5 +1,9 @@
 ---
-sort: 3
+tags:
+  - Open Finance
+  - Authentication
+  - HMAC
+  - JWT
 ---
 # Authentication
 

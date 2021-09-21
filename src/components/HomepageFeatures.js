@@ -8,8 +8,8 @@ const FeatureList = [
     Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        The OFP is designed with the flexibility of JSON or MsgPack,
-        But is compact and over persistent connections such as HTTP2 or WS
+        The Open Finance Protocol (OFP) is designed to empower the flexibility of JSON or MsgPack,
+        compact, and used over persistent connections such as HTTP2 or WebSocket.
       </>
     ),
   },
@@ -18,7 +18,7 @@ const FeatureList = [
     Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Protocol has been design for modern FinTech to interact with all web3 compatible blockchains
+        Protocol has been designed for modern FinTech to interact with all web3 compatible blockchains
         you can comment our protocol described in <code>docs</code> directory.
       </>
     ),

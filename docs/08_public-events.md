@@ -1,5 +1,7 @@
 ---
-sort: 8
+tags:
+  - Open Finance
+  - Event streams
 ---
 # Public events streams
 

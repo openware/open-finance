@@ -1,10 +1,11 @@
 ---
-sort: 9
+tags:
+  - Open Finance
+  - Event streams
 ---
+# Private events streams
 
-## Private events streams
-
-### Order notifications
+## Order notifications
 
 ```json
 [
@@ -114,7 +115,7 @@ sort: 9
 | Fee Currency | Fee currency                 |
 | Timestamp    | Trade timestamp              |
 
-### Balance update
+## Balance update
 
 ```json
 [

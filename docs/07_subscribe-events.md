@@ -1,5 +1,7 @@
 ---
-sort: 7
+tags:
+  - Open Finance
+  - Event streams
 ---
 # Events subscriptions
 

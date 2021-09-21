@@ -1,5 +1,6 @@
 ---
-sort: 5
+tags:
+  - Open Finance
 ---
 # List Instruments
 
