@@ -50,7 +50,7 @@ sequenceDiagram;
 
 ## State format
 
-A state is a simple arrayEvery event is formatted in a JSON array like the following:
+A state is a simple array containing the following elements:
 
 ```
 [increment, balances, open_orders, outcomes]
@@ -64,7 +64,26 @@ A state is a simple arrayEvery event is formatted in a JSON array like the follo
 | open_orders     | List of open orders of the trader |
 | outcomes  | Result of the current outcomes for the trader and broker for this session |
 
+### Increment
 
+This number has to be incremented by one when a party issue a new state, by signing a new state the party implicitly validates the previous state issued by the other party.
+
+### Balances
+
+Balances define the current available funds available for trading, the user might be able to limit the amount of funds he wants to allocate to the current trading session.
+
+:construction: We can probably store only the available balances, so when an order is created we reduce the amount of available balance according to this order (by the "locked" amount).:construction:
+
+### Open orders
+
+List of current open orders of the trader, the trader updates this list when he creates an order and the server when there is a trade.
+
+### Outcomes
+
+Represent the amount to be paid at the end of the trading session by the trader to the broker and the other way around.
+
+Those outcomes can be used at some point for further trading, a trader could decide to buy a token at the beginning of the session and sell before the end the session, in this case the outcomes of the session would be the profits or losses.
 
 ## Disputes
 
+To be defined.
