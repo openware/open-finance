@@ -10,7 +10,9 @@ Trading channels are a specific implementation of state channels specifically de
 
 
 
-## Simple Example (server initiative)
+## Approach 1: Simple Example (server initiative)
+
+In this approach we leave the initiative of messages to the server, the client only acknowledge the messages. This way the server can immediately send trade notifications to the client. *Create Order* and *Finalize* requests are made by the client outside of the state channel protocol which brings the benefit of having the server to accept the order before the state is changed.
 
 
 ```mermaid
@@ -18,9 +20,9 @@ sequenceDiagram;
     Trader-->>Broker: Request setup
     Broker->>Trader: Setup
     Trader->>Broker: Setup ACK
-    Trader-->>Broker: CreateOrder
-    Broker->>Trader: Lock balance
-    Trader->>Broker: Lock balance ACK
+    Trader-->>Broker: Create Order request
+    Broker->>Trader: Create Order
+    Trader->>Broker: Create Order ACK
     Broker->>Trader: Trade
     Trader->>Broker: Trade ACK
     Trader-->>Broker: Request Finalize
@@ -29,15 +31,19 @@ sequenceDiagram;
 
 ```
 
-## Simple Example (cooperative approach)
+## Approach 2: Simple Example (cooperative approach)
+
+In this approach we add a translation method *Yield* which doesn't change the state but gives the opportunity to the other party to initiate a state transition. This way we can have some gain in performances by reducing the number of round trips of the trading session.
+
+In this example the *Create Order* and *Finalize* transition is initiated directly by the Trader.
 
 
 ```mermaid
 sequenceDiagram;
     Trader->>Broker: Setup
     Broker->>Trader: Setup ACK
-    Trader->>Broker: CreateOrder
-    Broker->>Trader: CreateOrder ACK
+    Trader->>Broker: Create Order
+    Broker->>Trader: Create Order ACK
     Trader->>Broker: Yield
     Broker->>Trader: Trade
     Trader->>Broker: Trade ACK
@@ -84,6 +90,28 @@ Represent the amount to be paid at the end of the trading session by the trader 
 
 Those outcomes can be used at some point for further trading, a trader could decide to buy a token at the beginning of the session and sell before the end the session, in this case the outcomes of the session would be the profits or losses.
 
+## Native Multi-Blockchains support
+
+The trading channel protocol is intended to be used over multiple blockchains. The trader can lock funds on one blockchains and request payment of the outcomes on an other one.
+
+https://besu.hyperledger.org/en/stable/Concepts/NetworkID-And-ChainID/
+
+We aim to support more than Ethereum layer 1 & 2 networks, so we can't just use Chain ID and Network ID who are just working for Ethereum layers.
+
+The simplest option is to define the list of supported networks.
+
+:construction: To be defined. :construction:
+
+
+
 ## Disputes
 
-To be defined.
+:construction: To be defined. :construction:
+
+
+
+## Replay attack
+
+Signed states are intended to be used on a specific exchange smart-contract on a specific blockchain.
+
+:construction: Protection against replay attack must be defined :construction:
