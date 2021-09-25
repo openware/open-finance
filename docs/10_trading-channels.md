@@ -59,13 +59,13 @@ sequenceDiagram;
 A state is a simple array containing the following elements:
 
 ```
-[increment, balances, open_orders, outcomes]
+[turnNum, balances, open_orders, outcomes]
 ```
 
 
 | Element    | Description                                                  |
 | ---------- | ------------------------------------------------------------ |
-| increment       | Number incrementing at every turn |
+| turnNum | Number incrementing at every turn |
 | balances | Available and locked balances of the trader |
 | open_orders     | List of open orders of the trader |
 | outcomes  | Result of the current outcomes for the trader and broker for this session |
@@ -96,11 +96,9 @@ The trading channel protocol is intended to be used over multiple blockchains. T
 
 https://besu.hyperledger.org/en/stable/Concepts/NetworkID-And-ChainID/
 
-We aim to support more than Ethereum layer 1 & 2 networks, so we can't just use Chain ID and Network ID who are just working for Ethereum layers.
+We aim to support more than Ethereum layer 1 & 2 networks, so we can't just use Chain ID and Network ID which are defined only for EVM based blockchains.
 
-The simplest option is to define the list of supported networks.
-
-:construction: To be defined. :construction:
+The [EIP-3220](https://eips.ethereum.org/EIPS/eip-3220) can be used to define a unique identifier for every blockchain.
 
 
 
