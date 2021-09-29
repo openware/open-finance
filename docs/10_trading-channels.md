@@ -53,22 +53,51 @@ sequenceDiagram;
 
 ```
 
-
 ## State format
 
-A state is a simple array containing the following elements:
-
+```c
+struct FixedPart {
+  uint256 chainId;
+  address[] participants;
+  uint48 channelNonce;
+  address appDefinition;
+  uint48 challengeDuration;
+}
 ```
-[turnNum, balances, open_orders, outcomes]
+
+
+
+```c
+struct VariablePart {
+  bytes outcome;
+  bytes appData;
+}
 ```
 
 
-| Element    | Description                                                  |
-| ---------- | ------------------------------------------------------------ |
-| turnNum | Number incrementing at every turn |
-| balances | Available and locked balances of the trader |
-| open_orders     | List of open orders of the trader |
-| outcomes  | Result of the current outcomes for the trader and broker for this session |
+
+The appData contains the following information:
+
+```json
+{
+ balances: {
+  0x0: [0.10, 0.20], // Native chain token (ETH, MATIC, BNB, ...), [available, locked]
+  0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48: [1000, 2000] // USDC token address on ETH
+ },
+ orders: {
+  "wbtc/usdc": [5, 105, 0x123456], // [5 open orders, 105 total orders, checksum of the last open order of the user]
+  "matic/usdc": [1, 10, 0x987654], // [1 open orders, 10 total orders]
+ }
+}
+```
+
+
+
+Similarly to git history, the server computes the order hash with the previous order hash, so an audit can be performed on the history:
+
+```hash_order_N = hash(hash_order_N-1 + order)```
+
+
 
 ### Increment
 
