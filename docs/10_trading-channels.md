@@ -99,6 +99,10 @@ Similarly to git history, the server computes the order hash with the previous o
 
 
 
+To compute those hash and have the ability to audit the history we need to store the event log.
+
+TODO: Explain that a trader can ignore a trade notification and not sign it, but trader must accept new state in order to submit new order.
+
 ### Increment
 
 This number has to be incremented by one when a party issue a new state, by signing a new state the party implicitly validates the previous state issued by the other party.
