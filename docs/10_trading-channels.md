@@ -8,50 +8,45 @@ tags:
 
 Trading channels are a specific implementation of state channels specifically designed for trading purposes. State channels are a technique for scaling blockchains by running most of the process off-chain and committing only the result to the blockchain. Every trading step is an off-chain transition from a state to an other, transitions are performed between the trader (client) and the broker (server). Each party sign each transition at every step. If both parties sign the final step, any of them can use this final state to withdraw the funds of the final balance.
 
+## Definitions
+
+**Vault**: smart-contract dedicated to a broker, it’s possible a broker has more than one vault per network, which implement [NitroAdjudicator](https://github.com/statechannels/statechannels/blob/master/packages/nitro-protocol/contracts/NitroAdjudicator.sol)
+
+**Channel**: is trading balance allocated from blockchain state, having a life-cycle of the backend session, likely expires after 30 min of inactivity (no new orders)
+Opening a channel occurs after the funding stage (deposit fund to smart-contract), closing the channel, update available balance which can be withdrawn at the defunding stage.
+
+Channel-ID is likely mapped to Server side Session-ID
+
+**Adjudicator:** logic in smart-contract to validate a state transition, in our case transitions are balance chance having the following transition logic: If user initiate balance change, with mutually signed by user and broker (deposit, order, cancel)If broker initiate balance change, it’s only signed by broker and user can’t reject the transition, (ex: new trades) within range of possible operations, such as executing open order.
+
+**State**:
+The minimal state is defined as available balance, locked balance.
 
 
-## Approach 1: Simple Example (server initiative)
+
+## Protocol overview
 
 In this approach we leave the initiative of messages to the server, the client only acknowledge the messages. This way the server can immediately send trade notifications to the client. *Create Order* and *Finalize* requests are made by the client outside of the state channel protocol which brings the benefit of having the server to accept the order before the state is changed.
 
 
 ```mermaid
 sequenceDiagram;
-    Trader-->>Broker: Request setup
-    Broker->>Trader: Setup
-    Trader->>Broker: Setup ACK
-    Trader-->>Broker: Create Order request
-    Broker->>Trader: Create Order
-    Trader->>Broker: Create Order ACK
-    Broker->>Trader: Trade
-    Trader->>Broker: Trade ACK
+    Trader-->>Broker: Sign-in
+    Broker-->>Trader: Session-ID
+    Trader->>Vault: call Deposit(Currency, Amount)
+    Trader->>Broker: Create order request with signed balance
+    Broker->>Trader: Order accepted new balance mutual signed
+    Broker-->>Trader: Trade
+    Trader->>Broker: Accept new balances before next orders
+    Trader->>Broker: Create order request with signed balance
+    Broker->>Trader: Order accepted new balance mutual signed
     Trader-->>Broker: Request Finalize
-    Broker->>Trader: Finalize
-    Trader->>Broker: Finalize ACK
+    Broker->>Vault: Finalize
+    Trader->>Vault: call Withdraw() to pull ERC20 back
 
 ```
 
-## Approach 2: Simple Example (cooperative approach)
 
-In this approach we add a translation method *Yield* which doesn't change the state but gives the opportunity to the other party to initiate a state transition. This way we can have some gain in performances by reducing the number of round trips of the trading session.
-
-In this example the *Create Order* and *Finalize* transition is initiated directly by the Trader.
-
-
-```mermaid
-sequenceDiagram;
-    Trader->>Broker: Setup
-    Broker->>Trader: Setup ACK
-    Trader->>Broker: Create Order
-    Broker->>Trader: Create Order ACK
-    Trader->>Broker: Yield
-    Broker->>Trader: Trade
-    Trader->>Broker: Trade ACK
-    Broker->>Trader: Yield
-    Trader->>Broker: Finalize
-    Broker->>Trader: Finalize ACK
-
-```
 
 ## State format
 
@@ -65,8 +60,6 @@ struct FixedPart {
 }
 ```
 
-
-
 ```c
 struct VariablePart {
   bytes outcome;
@@ -74,34 +67,16 @@ struct VariablePart {
 }
 ```
 
-
-
-The appData contains the following information:
+### State appData
 
 ```json
 {
- balances: {
-  0x0: [0.10, 0.20], // Native chain token (ETH, MATIC, BNB, ...), [available, locked]
-  0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48: [1000, 2000] // USDC token address on ETH
- },
- orders: {
-  "wbtc/usdc": [5, 105, 0x123456], // [5 open orders, 105 total orders, checksum of the last open order of the user]
-  "matic/usdc": [1, 10, 0x987654], // [1 open orders, 10 total orders]
- }
+	0x0: [0.10, 0.20], // Native chain token (ETH, MATIC, BNB, ...), [available, locked]
+    0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48: [1000, 2000] // USDC token address on ETH
 }
 ```
 
 
-
-Similarly to git history, the server computes the order hash with the previous order hash, so an audit can be performed on the history:
-
-```hash_order_N = hash(hash_order_N-1 + order)```
-
-
-
-To compute those hash and have the ability to audit the history we need to store the event log.
-
-TODO: Explain that a trader can ignore a trade notification and not sign it, but trader must accept new state in order to submit new order.
 
 ### Increment
 
@@ -111,7 +86,7 @@ This number has to be incremented by one when a party issue a new state, by sign
 
 Balances define the current available funds available for trading, the user might be able to limit the amount of funds he wants to allocate to the current trading session.
 
-:construction: We can probably store only the available balances, so when an order is created we reduce the amount of available balance according to this order (by the "locked" amount).:construction:
+We can probably store only the available balances, so when an order is created we reduce the amount of available balance according to this order (by the "locked" amount). :building_construction:
 
 ### Open orders
 
@@ -136,13 +111,3 @@ The [EIP-3220](https://eips.ethereum.org/EIPS/eip-3220) can be used to define a 
 
 
 ## Disputes
-
-:construction: To be defined. :construction:
-
-
-
-## Replay attack
-
-Signed states are intended to be used on a specific exchange smart-contract on a specific blockchain.
-
-:construction: Protection against replay attack must be defined :construction:
