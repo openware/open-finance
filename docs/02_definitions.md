@@ -1,7 +1,9 @@
 ---
-title: Get started
 tags:
-  - Open Finance
+  - JSON
+  - Types
+  - rpc
+  - events
 ---
 # General definitions
 
@@ -9,7 +11,7 @@ The protocol is aimed to be used through web-socket but is not limited to it, an
 
 Every event is formatted in a JSON array like the following:
 
-```
+```json
 [type, request_id, method, arguments]
 ```
 

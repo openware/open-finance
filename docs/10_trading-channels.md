@@ -1,12 +1,13 @@
 ---
 tags:
-  - Open Finance
+  - State Channels
   - Trading channels
+  - Custody
+  - Blockchain
+  - web3
 ---
 
 # Trading channels
-
-[TOC]
 
 ## Introduction
 
