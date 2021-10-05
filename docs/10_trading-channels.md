@@ -6,6 +6,10 @@ tags:
 
 # Trading channels
 
+[TOC]
+
+## Introduction
+
 Trading channels are a specific implementation of state channels specifically designed for trading purposes. State channels are a technique for scaling blockchains by running most of the process off-chain and committing only the result to the blockchain. Every trading step is an off-chain transition from a state to an other, transitions are performed between the trader (client) and the broker (server). Each party sign each transition at every step. If both parties sign the final step, any of them can use this final state to withdraw the funds of the final balance.
 
 ## Definitions
@@ -22,8 +26,6 @@ Channel-ID is likely mapped to Server side Session-ID
 **State**:
 The minimal state is defined as available balance, locked balance.
 
-
-
 ## Protocol overview
 
 In this approach we leave the initiative of messages to the server, the client only acknowledge the messages. This way the server can immediately send trade notifications to the client. *Create Order* and *Finalize* requests are made by the client outside of the state channel protocol which brings the benefit of having the server to accept the order before the state is changed.
@@ -36,7 +38,7 @@ sequenceDiagram;
     Trader->>Vault: call Deposit(Currency, Amount)
     Trader->>Broker: Create order request with signed balance
     Broker->>Trader: Order accepted new balance mutual signed
-    Broker-->>Trader: Trade
+    Broker-->>Trader: Trade Event
     Trader->>Broker: Accept new balances before next orders
     Trader->>Broker: Create order request with signed balance
     Broker->>Trader: Order accepted new balance mutual signed
@@ -76,38 +78,61 @@ struct VariablePart {
 }
 ```
 
-
-
-### Increment
-
-This number has to be incremented by one when a party issue a new state, by signing a new state the party implicitly validates the previous state issued by the other party.
-
-### Balances
+#### Balances
 
 Balances define the current available funds available for trading, the user might be able to limit the amount of funds he wants to allocate to the current trading session.
 
-We can probably store only the available balances, so when an order is created we reduce the amount of available balance according to this order (by the "locked" amount). :building_construction:
+| :exclamation:  Important note about balance states and trades |
+| ------------------------------------------------------------ |
+| The main goal of the state-channel is to keep track of open orders to know the available balance when requesting a withdrawal. Since trades are not initiated directly by the trader request and depends on an external context such as a price change, the protocol DOES NOT request end-user signature on trades. Thus trades cannot be rejected by the trader. Though the trader will have an updated balance from a valid transition which MUST be connected to a previously locked balance and an open order, when resuming trade activity user must accept his new state before submitting more orders. |
 
-### Open orders
+#### Channels
 
-List of current open orders of the trader, the trader updates this list when he creates an order and the server when there is a trade.
+Channels have a short lifespan matching the online and connected presence of the trader or bot. They match and belong to server side session duration, when a server side session expires, backend ForceMove to finalize the state of the channel and persist to the blockchain.
 
-### Outcomes
+Additionally when trader closed gracefully his session by clicking the logout button, he is requested if he wish to persist the state onto the Vault.
 
-Represent the amount to be paid at the end of the trading session by the trader to the broker and the other way around.
+## State Machine
 
-Those outcomes can be used at some point for further trading, a trader could decide to buy a token at the beginning of the session and sell before the end the session, in this case the outcomes of the session would be the profits or losses.
+```mermaid
+flowchart TD
+    A(Login) --> B[/Deposit/];
+    B --> C[Open channel];
+    C --> D{Create orders};
+    C --> E
+    D --> G[Receives trades online]
+    D --> D;
+    G --> E
+    D --> E[Close channel];
+    E --> H[Receives trades offline]
+    H --> C
+    E --> F[/Withdraw funds/]
+    F --> I(Logout)
+```
 
-## Native Multi-Blockchains support
+
+
+### Crosschains support
 
 The trading channel protocol is intended to be used over multiple blockchains. The trader can lock funds on one blockchains and request payment of the outcomes on an other one.
 
 https://besu.hyperledger.org/en/stable/Concepts/NetworkID-And-ChainID/
 
-We aim to support more than Ethereum layer 1 & 2 networks, so we can't just use Chain ID and Network ID which are defined only for EVM based blockchains.
+Open-Finance aim to support more than Ethereum layer 1 & 2 networks, so we can't just use Chain ID and Network ID which are defined only for EVM based blockchains.
 
 The [EIP-3220](https://eips.ethereum.org/EIPS/eip-3220) can be used to define a unique identifier for every blockchain.
 
+## Adjudicator logic
 
+### Balance valid transitions
 
-## Disputes
+1. Trader can only update main balance to locked balance in the limit of amount initiated in channel and previously deposited (By creating orders)
+2. Trader can unlock funds from locked to main balance by canceling orders
+3. Broker can swap locked balance funds from and to another currency when trades occurs
+
+### Open order count valid transitions
+
+1. Trader can increment open order count by creating orders
+2. Trader can decrement open order count by canceling orders
+3. Broker can decrement open order count by fulfilling orders
+4. Broker cannot update balance without open orders
