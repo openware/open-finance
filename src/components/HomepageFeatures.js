@@ -5,7 +5,7 @@ import styles from './HomepageFeatures.module.css';
 const FeatureList = [
   {
     title: 'High Performance protocol',
-    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('../../static/img/high-perf.svg').default,
     description: (
       <>
         The Open Finance Protocol (OFP) is designed to empower the flexibility of JSON or MsgPack,
@@ -15,7 +15,7 @@ const FeatureList = [
   },
   {
     title: 'Cross-Chain and Blockchain agnostic',
-    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('../../static/img/cross.svg').default,
     description: (
       <>
         Protocol has been designed for modern FinTech to interact with all web3 compatible blockchains
@@ -25,7 +25,7 @@ const FeatureList = [
   },
   {
     title: 'Global Trade and Settlement network',
-    Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('../../static/img/global.svg').default,
     description: (
       <>
         The protocol describe and suggest how the Finance can upgrade to take advantage

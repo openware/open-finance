@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
   title: 'Open Finance Protocol',
-  tagline: 'The Open Finance protocol',
+  tagline: 'Network of sharded orderbook for Ultra-High-Frequency-Trading',
   url: 'https://www.open-finance.org',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -22,14 +22,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/openware/open-finance/edit/main/website/',
+          editUrl: 'https://github.com/openware/open-finance/edit/main/',
           remarkPlugins: [require('mdx-mermaid')],
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/openware/open-finance/edit/main/website/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -54,7 +48,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             position: 'left',
             label: 'Protocol.',
           },
-          {to: '/blog', label: 'Blog.', position: 'left'},
+          {to: 'https://www.custody.org', label: 'Custody.', position: 'left'},
           {
             href: 'https://github.com/openware/open-finance',
             label: 'GitHub',
@@ -82,8 +76,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
                 href: 'https://stackoverflow.com/questions/tagged/open-finance',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Telegram',
+                href: 'https://t.me/yellow_defi',
               },
               {
                 label: 'Twitter',
@@ -95,8 +89,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
+                label: 'Custody',
+                href: 'https://www.custody.org/',
+              },
+              {
+                label: 'Openware',
+                href: 'https://www.openware.com/',
               },
               {
                 label: 'GitHub',
