@@ -11,18 +11,17 @@ tags:
 
 ## Introduction
 
-Trading channels are a specific implementation of state channels specifically designed for trading purposes. State channels are a technique for scaling blockchains by running most of the process off-chain and committing only the result to the blockchain. Every trading step is an off-chain transition from a state to an other, transitions are performed between the trader (client) and the broker (server). Each party sign each transition at every step. If both parties sign the final step, any of them can use this final state to withdraw the funds of the final balance.
+Trading channels are a specific implementation of state channels specifically designed for trading purposes. State channels are a technique for scaling blockchains by running most of the process off-chain and committing only the result to the blockchain. Every trading step is an off-chain transition from a state to an other, transitions are performed between the trader (client) and the broker (server). Each party sign each transition at every step. If both parties sign the final step, any of them can use this final state to withdraw the funds of final balances.
 
 ## Definitions
 
 **Vault**: smart-contract dedicated to a broker, it’s possible a broker has more than one vault per network, which implement [NitroAdjudicator](https://github.com/statechannels/statechannels/blob/master/packages/nitro-protocol/contracts/NitroAdjudicator.sol)
 
-**Channel**: is trading balance allocated from blockchain state, having a life-cycle of the backend session, likely expires after 30 min of inactivity (no new orders)
-Opening a channel occurs after the funding stage (deposit fund to smart-contract), closing the channel, update available balance which can be withdrawn at the defunding stage.
+**Channel**: contains trading balances allocated from a blockchain state, it has a life-cycle of the backend session, likely expires after 30 min of inactivity (no new orders). Opening a channel occurs after the funding stage (deposit fund to smart-contract), closing the channel, update available balance which can be withdrawn at the defunding stage.
 
 Channel-ID is likely mapped to Server side Session-ID
 
-**Adjudicator:** logic in smart-contract to validate a state transition, in our case transitions are balance chance having the following transition logic: If user initiate balance change, with mutually signed by user and broker (deposit, order, cancel)If broker initiate balance change, it’s only signed by broker and user can’t reject the transition, (ex: new trades) within range of possible operations, such as executing open order.
+**Adjudicator:** logic in smart-contract to validate a state transition, in our case transitions are balance change having the following transition logic: If user initiate balance change, with mutually signed by user and broker (deposit, order, cancel). If broker initiate balance change, it’s only signed by broker and user can’t reject the transition, (ex: new trades) within range of possible operations, such as executing open order.
 
 **State**:
 The minimal state is defined as available balance, locked balance.
@@ -38,11 +37,11 @@ sequenceDiagram;
     Broker-->>Trader: Session-ID
     Trader->>Vault: call Deposit(Currency, Amount)
     Trader->>Broker: Create order request with signed balance
-    Broker->>Trader: Order accepted new balance mutual signed
+    Broker->>Trader: Order accepted new balance mutually signed
     Broker-->>Trader: Trade Event
     Trader->>Broker: Accept new balances before next orders
     Trader->>Broker: Create order request with signed balance
-    Broker->>Trader: Order accepted new balance mutual signed
+    Broker->>Trader: Order accepted new balance mutually signed
     Trader-->>Broker: Request Finalize
     Broker->>Vault: Finalize
     Trader->>Vault: call Withdraw() to pull ERC20 back
@@ -81,7 +80,7 @@ struct VariablePart {
 
 #### Balances
 
-Balances define the current available funds available for trading, the user might be able to limit the amount of funds he wants to allocate to the current trading session.
+Balances define the current funds available for trading, the user might be able to limit the amount of funds he wants to allocate to the current trading session.
 
 | :exclamation:  Important note about balance states and trades |
 | ------------------------------------------------------------ |
@@ -89,7 +88,7 @@ Balances define the current available funds available for trading, the user migh
 
 #### Channels
 
-Channels have a short lifespan matching the online and connected presence of the trader or bot. They match and belong to server side session duration, when a server side session expires, backend ForceMove to finalize the state of the channel and persist to the blockchain.
+Channels have a short lifespan depending on the online and connected presence of the trader or bot. They match and belong to server side session duration, when a server side session expires, backend can *ForceMove* to finalize the state of the channel and persist to the blockchain.
 
 Additionally when trader closed gracefully his session by clicking the logout button, he is requested if he wish to persist the state onto the Vault.
 
@@ -117,9 +116,7 @@ flowchart TD
 
 The trading channel protocol is intended to be used over multiple blockchains. The trader can lock funds on one blockchains and request payment of the outcomes on an other one.
 
-https://besu.hyperledger.org/en/stable/Concepts/NetworkID-And-ChainID/
-
-Open-Finance aim to support more than Ethereum layer 1 & 2 networks, so we can't just use Chain ID and Network ID which are defined only for EVM based blockchains.
+Open-Finance aims to support more than Ethereum layer 1 & 2 networks (EVM based blockchains), EVM based blockchains use [Chain ID and Network ID](https://besu.hyperledger.org/en/stable/Concepts/NetworkID-And-ChainID/) to identify the blockchains, thus it's not compatible with blockchains not based on EVM.
 
 The [EIP-3220](https://eips.ethereum.org/EIPS/eip-3220) can be used to define a unique identifier for every blockchain.
 
