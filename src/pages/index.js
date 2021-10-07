@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.title} Initiative`}
-      description="The Open-Finance protocol suggest a way for brokers to collaborate on a virtual overlay network of settlement channels such as XLN">
+      description="The Open-Finance protocol suggests a way for brokers to collaborate on a virtual overlay network of settlement channels such as XLN">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
