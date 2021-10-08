@@ -5,7 +5,7 @@ tags:
 
 # Orders
 
-In our standard, the parameters order plays an important role as the position of the parameter represents a key. All utilized parameters must be present in request and response even if they are not utilized. To skip optional parameter use a `null` value.
+In our standard, the parameter's order plays an important role as the position of the parameter represents a key. All utilized parameters must be present in request and response even if they are not utilized. To skip an optional parameter use the `null` value.
 
 **Order types** supported with `create_order` method:
 
@@ -54,7 +54,7 @@ Supported order **flags** instructions:
 | 16   | OCO          | integer | The one cancels other order option allows you to place a pair of orders stipulating that if one order is executed fully or partially, then the other is automatically canceled. |
 | 32   | No Var Rates | integer | Excludes variable rate funding offers from matching against this order, if on margin                                                                                            |
 
-For **timestamps** use UTC time that expressed as milliseconds (i.e. 1588678924349)
+For **timestamps**, use UTC time, expressed in milliseconds (i.e. 1588678924349)
 
 **Order statuses table**:
 
@@ -66,7 +66,7 @@ For **timestamps** use UTC time that expressed as milliseconds (i.e. 15886789243
 | 4    | Rejected | Order rejected due too some errors                                           |
 | 5    | Canceled | Order canceled by user                                                       |
 
-**Bellow you can find examples of different order types:**
+**Below you can find examples of different order types:**
 
 ## Market order
 
@@ -106,7 +106,7 @@ Arguments with corresponding numeration of **market** order **update notificatio
 | 13  | timestamp         |  integer  |             1588678924349              |
 | 14  | reject_reason     |  string   |        "rejected by orderbook"         |
 
-Example of the messages
+### Example of the messages
 
 Request:
 
@@ -123,7 +123,7 @@ Response:
 
 ## Limit order
 
-Limit order can be customized with flags and TIF instructions.
+A limit order can be customized with flags and TIF instructions.
 
 Arguments with corresponding numeration of **limit** order **request**:
 
@@ -160,7 +160,7 @@ Arguments with corresponding numeration of **market** order **update notificatio
 | 13  | timestamp         |  integer  |             1588678924349              |
 | 14  | reject_reason     |  string   |        "rejected by orderbook"         |
 
-Example of the messages
+### Example of the messages
 
 Request:
 
@@ -207,7 +207,7 @@ Arguments with corresponding numeration of **stop** order **response**:
 | 11  | message       |  string   |      ""       |
 | 12  | order_id      |  string   |   "8745985"   |
 
-Example of the messages
+### Example of the messages
 
 Request:
 
@@ -255,7 +255,7 @@ Arguments with corresponding numeration of **stop-limit** order **response**:
 | 12  | message       |  string   |      ""       |
 | 13  | order_id      |  string   |   "8745985"   |
 
-Example of the messages
+### Example of the messages
 
 Request:
 
@@ -271,9 +271,9 @@ Response:
 
 ## Bulk order
 
-Bulk order uses `create_bulk` method to send multiple orders within one request. Also, bulk order can be used to send different order types with one request. _We need to specify parsing order of orders inside the bulk order._
+Bulk order uses `create_bulk` method to send multiple orders within one request. Also, bulk orders can be used to send different order types with one request. _We need to specify parsing order of orders inside the bulk order._
 
-Example of the messages
+### Example of the messages
 
 Request:
 
