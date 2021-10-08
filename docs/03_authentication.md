@@ -30,10 +30,10 @@ Any symmetric and asymmetric JWT authentication mechanism can be used over SSL.
 
 ## Shared secret Authentication
 
-HMAC is a standard authentication mechanism used to authenticates to API servers. It uses a shared secret to generate a token for every request.
+HMAC is a standard mechanism used for authentication on API servers. It uses a shared secret to generate a token for every request.
 
 ## Asymmetric key Authentication
-Preferred method for security reasons.
+A preferred method for security reasons.
 
 RSA or EC is an asymmetric signature mechanism, it allows each peer to generate a secret privately and sign messages without sharing any secret.
 
