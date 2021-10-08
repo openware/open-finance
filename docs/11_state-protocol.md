@@ -9,7 +9,7 @@ tags:
 
 # State channels protocol
 
-After login, server MUST keeps track of the end-user balance in an atomic and FIFO way, every time the balance is update the server must send a balance change event signed.
+After login, the server MUST keep track of the end-user balance in atomic and FIFO way, every time the balance is updated the server must send a balance change event signed.
 
 The Clients must perform a signature before sending additional orders.
 
