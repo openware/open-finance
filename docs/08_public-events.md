@@ -123,4 +123,4 @@ Orderbook update
 | ---------- | ------------------------------------------------------- |
 | Sequence   | Sequentially increasing number                          |
 | Side       | Side updated, "asks" or "bids"                          |
-| PriceLevel | Price and amount, empty amount means pricelevel deleted |
+| PriceLevel | Price and amount, an empty amount means that the price level has been deleted |
