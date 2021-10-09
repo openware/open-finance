@@ -61,11 +61,15 @@ Peers keep track of which topics their directly-connected peers are subscribed t
 
 Keeping track of subscriptions happens by sending **subscribe** and **unsubscribe** messages. When a new connection is established between two peers they start by sending each other the list of topics they are subscribed to:
 
-![Subscription list sharing](../static/img/image4.png)
+<p align="center">
+  <img src="../static/img/image4.png" />
+</p>
 
 Then over time, whenever a peer subscribes or unsubscribes from a topic, it will send each of its peers a subscribe or unsubscribe message. These messages are sent to all connected peers regardless of whether the receiving peer is subscribed to the topic in question:
 
-![Unsubscription list sharing](../static/img/image5.png)
+<p align="center">
+  <img src="../static/img/image5.png" />
+</p>
 
 Subscribe and unsubscribe messages go hand-in-hand with graft and prune messages. When a peer subscribes to a topic it will pick some peers that will become its full-message peers for that topic and send them graft messages at the same time as their subscribe messages:
 
@@ -99,12 +103,25 @@ Peers gossip about messages they have recently seen. Every 1 second each peer 
 
 Gossiping gives peers a chance to notice in case they missed a message on the full-message network. If a peer notices it is repeatedly missing messages then it can set up new full-message peerings with peers that do have the messages. A specific message can be requested across a metadata-only peering:
 
-![Gossip1](../static/img/image11.png)
-![Gossip2](../static/img/image12.png)
-![Gossip3](../static/img/image13.png)
-![Gossip4](../static/img/image14.png)
-![Gossip5](../static/img/image15.png)
-![Gossip6](../static/img/image16.png)
+
+<p align="center">
+  <img src="../static/img/image11.png" />
+</p>
+<p align="center">
+  <img src="../static/img/image12.png" />
+</p>
+<p align="center">
+  <img src="../static/img/image13.png" />
+</p>
+<p align="center">
+  <img src="../static/img/image14.png" />
+</p>
+<p align="center">
+  <img src="../static/img/image15.png" />
+</p>
+<p align="center">
+  <img src="../static/img/image16.png" />
+</p>
 
 Gossip announcing recently seen messages are called **IHAVE** messages and requests for specific messages are called **IWANT** messages.
 
