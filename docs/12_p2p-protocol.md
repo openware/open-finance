@@ -110,7 +110,6 @@ Gossip announcing recently seen messages are called **IHAVE** messages and req
 
 ### Flow of the Order sharing to the Topic (Network) Orderbook
 
-import Mermaid from '@theme/Mermaid';
 
 <Mermaid chart='
 sequenceDiagram
