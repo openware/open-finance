@@ -113,49 +113,49 @@ Gossip announcing recently seen messages are called **IHAVE** messages and req
 
 <Mermaid chart='
 sequenceDiagram
-    Peer A--> Topic Orderbook: connect
-    Topic Orderbook--> Peer B: connect
-    User A->> Peer A: Create order
-    Note over User A,Peer A: Order gets peer_ID
-    Peer A->> Peer A: update of the local Orderbook of Peer A
-    Peer A->> Topic Orderbook: Push order
-    Note over Peer A, Topic Orderbook: Order with peer_ID of Peer A
-    Topic Orderbook->> Peer B: Gossip
-    Note over Peer B: at this point Peer B has a local order to be matched
-    Peer B->> Peer B: Order execution
-    Peer B->> Topic Orderbook: Event
-    Note over Peer B, Topic Orderbook: the state of the order is changed
-    Topic Orderbook->> Peer A: Full Connection/Gossip
-    Peer A->> Peer A: update of the local Orderbook of Peer A' />
+Peer A--> Topic Orderbook: connect
+Topic Orderbook--> Peer B: connect
+User A->> Peer A: Create order
+Note over User A,Peer A: Order gets peer_ID
+Peer A->> Peer A: update of the local Orderbook of Peer A
+Peer A->> Topic Orderbook: Push order
+Note over Peer A, Topic Orderbook: Order with peer_ID of Peer A
+Topic Orderbook->> Peer B: Gossip
+Note over Peer B: at this point Peer B has a local order to be matched
+Peer B->> Peer B: Order execution
+Peer B->> Topic Orderbook: Event
+Note over Peer B, Topic Orderbook: the state of the order is changed
+Topic Orderbook->> Peer A: Full Connection/Gossip
+Peer A->> Peer A: update of the local Orderbook of Peer A' />
 
 ### Flow of the getting a snapshot
 
 <Mermaid chart='
 sequenceDiagram
-    Peer A->> Bootstrap: Connect
-    Bootstrap ->> Bootstrap: Update local DHT
-    Peer A->> Network: Advertise (via Rendezvous string)
-    Network->> Peer A: Share matched rendezvous Peers (N total)
-    Peer A->> Peer X1: RPC call
-    Peer X1-->> Peer A: 
-    Peer A->> Peer X2: RPC call
-    Peer X2-->> Peer A:  
-    Peer A->> Peer XZ: RPC call
-    Peer XZ-->> Peer A: 
-    Note over Peer A, Peer XZ: RPC calls are made to random Peers (among N) according to Round Robin Algorithm, with total amount of RPC calls: Z=N/3
-    Peer A->> Peer A: Merge results' />
+Peer A->> Bootstrap: Connect
+Bootstrap ->> Bootstrap: Update local DHT
+Peer A->> Network: Advertise (via Rendezvous string)
+Network->> Peer A: Share matched rendezvous Peers (N total)
+Peer A->> Peer X1: RPC call
+Peer X1-->> Peer A: 
+Peer A->> Peer X2: RPC call
+Peer X2-->> Peer A:  
+Peer A->> Peer XZ: RPC call
+Peer XZ-->> Peer A: 
+Note over Peer A, Peer XZ: RPC calls are made to random Peers (among N) according to Round Robin Algorithm, with total amount of RPC calls: Z=N/3
+Peer A->> Peer A: Merge results' />
 
 ### Flow of the initial Peer connect
 
 <Mermaid chart='
 sequenceDiagram
-    Peer A->> Peer A: local Orderbook
-    Peer A->> Bootstrap: Connect
-    Bootstrap ->> Bootstrap: Update local hash table
-    Note over Bootstrap, Network: at this point Network knows about Peer A
-    Peer A->> Network: Advertise (via Rendezvous string)
-    Network->> Peer A: Reply with Array of Peers for this Topic
-    Note over Network, Peer A: [Peer X, Peer Y, Peer Z...]
-    Peer A->> Peer X: Snapshot request
-    Peer X->> Peer A: Snapshot
-    Peer A->> Peer A: local Orders matching' />
+Peer A->> Peer A: local Orderbook
+Peer A->> Bootstrap: Connect
+Bootstrap ->> Bootstrap: Update local hash table
+Note over Bootstrap, Network: at this point Network knows about Peer A
+Peer A->> Network: Advertise (via Rendezvous string)
+Network->> Peer A: Reply with Array of Peers for this Topic
+Note over Network, Peer A: [Peer X, Peer Y, Peer Z...]
+Peer A->> Peer X: Snapshot request
+Peer X->> Peer A: Snapshot
+Peer A->> Peer A: local Orders matching' />
