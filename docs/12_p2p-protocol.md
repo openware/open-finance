@@ -101,7 +101,7 @@ Peers gossip about messages they have recently seen. Every 1 second each peer 
 
 ![Sending the list of recently seen messages](../static/img/image10.png)
 
-Gossiping gives peers a chance to notice in case they missed a message on the full-message network. If a peer notices it is repeatedly missing messages then it can set up new full-message peerings with peers that do have the messages. A specific message can be requested across a metadata-only peering:
+Gossiping gives peers a chance to notice in case they missed a message on the full-message network. If a peer notices it is repeatedly missing messages then it can set up new full-message peerings with peers that do have the messages. A specific message can be requested across a metadata-only peering this way:
 
 
 <p align="center">
