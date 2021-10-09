@@ -14,7 +14,7 @@ tags:
 
 Publish/Subscribe is a system where peers congregate around topics they are interested in. Each topic in our case represent a separate market (e.g. “BTC/USDT”). Peers interested in a topic are said to be subscribed to that topic. Peers can send messages to topics. Each message gets delivered to all peers subscribed to the topic:
 
-![Topic, peer, message](/img/image1.png)
+![Topic, peer, message](../static/img/image1.png)
 
 ## Design goals
 
@@ -51,39 +51,39 @@ Full-message peerings are used to transmit the full contents of messages through
 
 Limiting the number of full-message peerings is useful because it keeps the amount of network traffic under control; each peer only forwards messages to a few other peers, rather than all of them. Each peer has a target number of peers it wants to be connected to. In this example each peer would ideally like to be connected to 3 other peers, but would settle for 2–4 connections:
 
-![Full-message network](/img/image2.png)
+![Full-message network](../static/img/image2.png)
 
 ## Subscribing and unsubscribing
 
 Peers keep track of which topics their directly-connected peers are subscribed to. Using this information each peer is able to build up a picture of the topics around them and which peers are subscribed to each topic:
 
-![Peers tracking](/img/image3.png)
+![Peers tracking](../static/img/image3.png)
 
 Keeping track of subscriptions happens by sending **subscribe** and **unsubscribe** messages. When a new connection is established between two peers they start by sending each other the list of topics they are subscribed to:
 
-![Subscription list sharing](/img/image4.png)
+![Subscription list sharing](../static/img/image4.png)
 
 Then over time, whenever a peer subscribes or unsubscribes from a topic, it will send each of its peers a subscribe or unsubscribe message. These messages are sent to all connected peers regardless of whether the receiving peer is subscribed to the topic in question:
 
-![Unsubscription list sharing](/img/image5.png)
+![Unsubscription list sharing](../static/img/image5.png)
 
 Subscribe and unsubscribe messages go hand-in-hand with graft and prune messages. When a peer subscribes to a topic it will pick some peers that will become its full-message peers for that topic and send them graft messages at the same time as their subscribe messages:
 
-![Full-message peering settlement](/img/image6.png)
+![Full-message peering settlement](../static/img/image6.png)
 
 When a peer unsubscribes from a topic it will notify its full-message peers that their connection has been pruned at the same time as sending their unsubscribe messages:
 
-![Full-message peering disconnection](/img/image7.png)
+![Full-message peering disconnection](../static/img/image7.png)
 
 ## Sending messages
 
 When a peer wants to publish a message it sends a copy to all full-message peers it is connected to:
 
-![Message sending](/img/image8.png)
+![Message sending](../static/img/image8.png)
 
 Similarly, when a peer receives a new message from another peer, it stores the message and forwards a copy to all other full-message peers it is connected to:
 
-![Message receiving](/img/image9.png)
+![Message receiving](../static/img/image9.png)
 
 Peers are also known as **routers** because of this function they have in routing messages through the network.
 
@@ -95,16 +95,16 @@ Peers might also choose to validate the contents of each message received. What 
 
 Peers gossip about messages they have recently seen. Every 1 second each peer randomly selects 6 metadata-only peers and sends them a list of recently seen messages.
 
-![Sending the list of recently seen messages](img/image10.png)
+![Sending the list of recently seen messages](../static/img/image10.png)
 
 Gossiping gives peers a chance to notice in case they missed a message on the full-message network. If a peer notices it is repeatedly missing messages then it can set up new full-message peerings with peers that do have the messages. A specific message can be requested across a metadata-only peering:
 
-![Gossip1](/img/image11.png)
-![Gossip2](/img/image12.png)
-![Gossip3](/img/image13.png)
-![Gossip4](/img/image14.png)
-![Gossip5](/img/image15.png)
-![Gossip6](/img/image16.png)
+![Gossip1](../static/img/image11.png)
+![Gossip2](../static/img/image12.png)
+![Gossip3](../static/img/image13.png)
+![Gossip4](../static/img/image14.png)
+![Gossip5](../static/img/image15.png)
+![Gossip6](../static/img/image16.png)
 
 Gossip announcing recently seen messages are called **IHAVE** messages and requests for specific messages are called **IWANT** messages.
 
