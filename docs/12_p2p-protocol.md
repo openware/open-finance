@@ -19,8 +19,7 @@ Publish/Subscribe is a system where peers congregate around topics they are inte
 ## Design goals
 
 In a peer-to-peer pub/sub system all peers participate in delivering messages throughout the network. There are several different designs for peer-to-peer pub/sub systems which offer different trade-offs. Desirable properties include:
-- Reliability: All messages get delivered to all peers subscribed to the topic.
-
+- **Reliability**: All messages get delivered to all peers subscribed to the topic.
 - **Speed:** Messages are delivered quickly.
 - **Efficiency:** The network is not flooded with excess copies of messages.
 - **Resilience:** Peers can join and leave the network without disrupting it. There is no central point of failure.
