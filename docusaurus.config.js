@@ -25,11 +25,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           editUrl: 'https://github.com/openware/open-finance/edit/master/',
           remarkPlugins: [require('mdx-mermaid')],
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl: 'https://github.com/openware/open-finance/edit/master/',
-        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
