@@ -4,7 +4,7 @@ tags:
 ---
 # List Instruments
 
-The list instruments method is used to fetch the list of trade-able instruments of a platform, for example spot markets. Clearinghouse or liquidity provider can call the exchange with this method to get a list of all supported instruments before sending any limit or quote.
+The list instruments method is used to fetch the list of trade-able instruments of a platform, for example, spot markets. A clearinghouse or liquidity provider can call the exchange with this method to get a list of all supported instruments before sending any limit or quote.
 
 Example of "**list_instruments**" request:
 
@@ -12,7 +12,7 @@ Example of "**list_instruments**" request:
 [1,42,"list_instruments",["spot", "active"]
 ```
 
-In response method sends information about requested instruments. Each instrument described with three arguments.
+In response, the method sends information about requested instruments. Each instrument is described with three arguments.
 
 |  №   | Name                | Data type |  Example  |
 | :--: | ------------------- | :-------: | :-------: |
