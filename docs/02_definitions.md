@@ -33,7 +33,7 @@ Every event is formatted in a JSON array like the following:
 
 ## Numerical values
 
-Because precision in finance matters very much the **Float type must not be used**, it's an approximate data type which mean values are round up. **Decimal or String representation** should be preferred. A common practice is to use Decimal type inside independent systems and String for communication between systems. This is why every numerical values which matters in this protocol is stored in a string.
+Because precision in finance matters a lot, the **float type must not be used**, it's an approximate data type which means values are round up. **Decimal or String representation** should be preferred. A common practice is to use Decimal type inside independent systems and String for communication between systems. This is why every numerical value which matters in this protocol is stored in a string.
 
 ## Units of time definition
 
@@ -49,4 +49,4 @@ Because precision in finance matters very much the **Float type must not be used
 
 The biggest unit of time possible must be chosen to represent a time period.
 
-For example `5m` must be chosen instead of `300s`.
+For example, `5m` must be chosen instead of `300s`.
