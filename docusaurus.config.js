@@ -48,7 +48,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             position: 'left',
             label: 'Protocol.',
           },
-          {to: '/blog', label: 'Blogs.', position: 'left'},
           {to: 'https://www.custody.org', label: 'Custody.', position: 'left'},
           {
             href: 'https://github.com/openware/open-finance',
