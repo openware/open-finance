@@ -1,6 +1,6 @@
 ---
 tags:
-  - lib2p2
+  - libp2p
   - Discovery
   - Subscribing
   - Peering
@@ -10,7 +10,7 @@ tags:
 
 # Peer-to-peer protocol
 
-## lib2p2
+## libp2p
 
 Publish/Subscribe is a system where peers congregate around topics they are interested in. Each topic in our case represent a separate market (e.g. “BTC/USDT”). Peers interested in a topic are said to be subscribed to that topic. Peers can send messages to topics. Each message gets delivered to all peers subscribed to the topic:
 
