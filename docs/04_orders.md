@@ -80,6 +80,7 @@ Arguments with corresponding numeration of **market** order **request**:
 |  2  | order_type |  string   |    "m"     |
 |  3  | side       |  string   |   "buy"    |
 |  4  | quantity   |  string   | "0.100000" |
+|  5  | price      |  string   |    "0"     |
 
 Arguments with corresponding numeration of **market** order **response**:
 
@@ -111,7 +112,7 @@ Arguments with corresponding numeration of **market** order **update notificatio
 Request:
 
 ```json
-[1, 42, "create_order", ["btcusd", "m", "sell", "0.100000", "1234567"]]
+[1, 42, "create_order", ["btcusd", "m", "sell", "0.100000", "0"]]
 ```
 
 Response:

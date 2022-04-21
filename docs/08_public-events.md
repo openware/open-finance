@@ -11,8 +11,6 @@ tags:
 
 | Argument      | Description                                               |
 | ------------- | --------------------------------------------------------- |
-| Market ID     | market unique identifier                                  |
-| Period        | Period                                                    |
 | Timestamp     | Timestamp of the period start                             |
 | Open price    | Price of the first trade in the period                    |
 | High price    | Highest price of the period                               |
@@ -24,10 +22,8 @@ tags:
 ```json
 [
   3,
-  "kline",
+  "kline.15m.ethusd",
   [
-    "ethbtc",
-    "15m",
     1588791600,
     0.025353,
     0.025353,
@@ -54,9 +50,11 @@ tags:
       0.025353,
       0.025353,
       10,
-      0.025353
+      0.025353,
+      0.025353,
+      "+3.94%"
     ],
-    ["bchbtc", 1588791600, 0.025353, 0.025353, 0.025353, 0.025353, 10, 0.025353]
+    ["bchbtc", 1588791600, 0.025353, 0.025353, 0.025353, 0.025353, 10, 0.025353, 0.025353, "-0.94%"]
   ]
 ]
 ```
@@ -68,18 +66,20 @@ Array of tickers
 | Argument      | Description                                               |
 | ------------- | --------------------------------------------------------- |
 | Market ID     | market unique identifier                                  |
-| Timestamp     | Timestamp of the period start                             |
+| Time          | Timestamp of the period start                             |
+| Min price     | Lowest price of the period                                |
+| Max price     | Highest price during the period                           |
 | Open price    | Price of the first trade in the period                    |
-| High price    | Highest price of the period                               |
-| Low price     | Lowest price of the period                                |
 | Close price   | Price of the last price of the period                     |
-| Period volume | (optional) Sum of trades amount of the period             |
-| Average price | (optional) Weighted average price of trades of the period |
+| Volume        | Trading volume in quote currency                          |
+| Amount        | Trading amount in base currency                           |
+| VWAP          | Volume-weighted average price during the period           |
+| Price change% | Percentage of price change during the period              |
 
 ## Trade
 
 ```json
-[3, "trade", ["btcusd", 1, "1", "1", 1589211189, "buy"]]
+[3, "trade", ["btcusd", 1, "1", "1", 1589211189, "buy", "21"]]
 ```
 
 **Payload**
@@ -92,6 +92,7 @@ Array of tickers
 | Amount     | Trade amount                         |
 | Timestamp  | Trade created_at timestamp           |
 | Taker type | Side of taker order, "buy" or "sell" |
+| Source     | Source ID                            |
 
 ## Orderbook
 
@@ -100,7 +101,7 @@ Array of tickers
 Orderbook Snapshot
 
 ```json
-[3, "obs", [0, [["10", "1"]], [["5", "1"]]]]
+[3, "ethusdt.obs", [0, [["10", "1"]], [["5", "1"]]]]
 ```
 
 | Argument | Description                     |
@@ -114,7 +115,7 @@ Orderbook Snapshot
 Orderbook update
 
 ```json
-[3, "obi", [1, "asks", ["10", "1"]]]
+[3, "ethusdt.obi", [1, "asks", ["10", "1"]]]
 ```
 
 **Payload**
