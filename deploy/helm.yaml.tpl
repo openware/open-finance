@@ -1,22 +1,23 @@
 image:
-  repository: quay.io/openware/website
+  repository: ${QUAY_REPO}
 
 imagePullSecrets:
   - name: ${PULL_SECRET_NAME}
 
 fullnameOverride: ${HELM_RELEASE}
+nameOverride: ${HELM_RELEASE}
 
 ingress:
   annotations:
     cert-manager.io/issuer: zerossl-prod
   hosts:
-    - host: ${HELM_HOST}
+    - host: ${DOMAIN}
       paths:
         - /
   tls:
     - secretName: ${HELM_RELEASE}-tls
       hosts:
-        - ${HELM_HOST}
+        - ${DOMAIN}
 
 service:
-  port: 80
+  port: ${SVC_PORT}
