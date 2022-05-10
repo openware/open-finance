@@ -1,11 +1,25 @@
 # Website
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+## One-click run
 
 ### Installation
 
-```
-$ yarn
+## Deployment to K8s
+
+To deploy the component to K8s, you should do the following:
+
+1. Install Helm
+2. Export all the env-vars
+3. Run `deploy/install.sh`
+4. Enjoy
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
 ```
 
 ### Local Development
