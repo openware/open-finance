@@ -137,5 +137,5 @@ Payload is an array of elements:
 | Argument | Description                 |
 | -------- | --------------------------- |
 | Currency | Market currency identifier  |
-| Balance  | User's balance for currency |
+| Balance  | User's available balance for currency |
 | Locked   | User's locked for currency  |
